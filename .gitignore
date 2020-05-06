@@ -1,0 +1,7 @@
+*.jpg
+*.pyc
+.idea
+Entorno/
+migrations/
+*.sqlite3
+settings.py
