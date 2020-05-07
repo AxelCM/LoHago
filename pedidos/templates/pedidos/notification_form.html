@@ -1,0 +1,84 @@
+{%extends "notificaciones/base2.html"%}
+{%load static%}
+
+{%block content%}
+{%include 'reporteria/widgets/mensajes.html'%}
+{%include 'reporteria/widgets/if_errors.html'%}
+<!--bus -->
+          <div class="w3agile contact">
+           <h3 class="w3ls-title2">POR FAVOR LLENA EL SIGUIENTE FORMULARIO PARA GENERAR LA ALERTA</h3>
+           <div class="book-a-ticket">
+            <div class=" bann-info">
+              <form action="{%url "mobile_notify"%}" method="POST">
+                {% csrf_token %}
+                <div class="ban-top">
+                  <div class="ban-top">
+                    <div class="bnr-left">
+                    <label class="inputLabel">EMERGENCIA QUE REPORTAS:</label>
+                    <select  name="accidente" required=required>
+                      {%for accidente in accidentes%}
+                      <option value="{{accidente.pk}}" >{{accidente.accidente}}</option>
+                      {%endfor%}
+                    </select>
+                    <label class="inputLabel">**IMPORTANTE**</label>
+                    <p><button onclick="geoFindMe()" class="btn btn-">Agregar Ubicacion</button></p>
+
+                    <div id="out" class="alert alert-info" role="alert">
+
+                    </div>
+
+                    <br>
+                    <label class="inputLabel">**IMPORTANTE**</label>
+                    <p>Por favor digita cuantas personas consideras que hay afectadas:</p>
+                    <input class="form-control" name="afectados" type="number" placeholder="Personas Afectadas Aprox"
+                    onfocus="this.value = '';"  min="0" max="99" step="any" required="">
+                  </div>
+                      <input  type="hidden"   class="form-control" name="profile"  value="{{perfil.pk}}">
+
+                      <input id="position" type="hidden"   class="form-control" name="geo" required=required>
+                    <div class="clearfix"></div>
+                  </div>
+                  </div>
+                  <hr>
+                  <br>
+                  <div class="ban-top">
+                  <div class="bnr-left">
+
+
+                </div>
+                <div class="search">
+                     <input type="submit" value="Enviar">
+                </div>
+              </form>
+            </div>
+        </div>
+    </div>
+<!-- //contact-->
+<script type="text/javascript">
+  function geoFindMe() {
+    var output = document.getElementById("out");
+
+    if (!navigator.geolocation){
+      output.innerHTML = "<h3>EL SERVICIO DE UBICACION NO ESTA DISPONIBLE PARA TU OS</h3>";
+      return;
+    }
+
+    function success(position) {
+      output.innerHTML = '<p style="color:green";>GRACIAS!!! LA UBICACION SE ADJUNTO CORRECTAMENTE</p>';
+      var latitude  = position.coords.latitude;
+      var longitude = position.coords.longitude;
+      document.getElementById("position").value = latitude + ", " + longitude ;
+    };
+
+    function error() {
+      output.innerHTML = '<p style="color:red";>OCURRIO UN ERROR CUANDO SE CAPTURABA LA UBICACION ES POSIBLE QUE NO HAYAS PERMITIDO A LA APP USAR EL SERVICIO DE UBICACION GPS</p>';
+    };
+
+    output.innerHTML = "<p>CAPTURANDO</p>";
+
+    navigator.geolocation.getCurrentPosition(success, error);
+  }
+
+
+</script>
+ {%endblock content%}

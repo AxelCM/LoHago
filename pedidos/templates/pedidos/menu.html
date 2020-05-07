@@ -1,0 +1,31 @@
+{%extends "pedidos/base2.html"%}
+{%load static%}
+
+{%block content%}
+<!--/welcome-->
+{%include 'pedidos/widgets/messages.html'%}
+         <div class="w3agile welcome">
+       <h3 class="w3ls-title">{{menu.name}}</h3>
+       <div class="b-bottom">
+   <div class="col-md-6 banner_bottom_right">
+   <div class="b-bottom">
+     <div class="text-center">
+       {%for r in types%}
+     {% if r.picture %}
+    <a href="{%url "index"%}" ><img class="rounded" src="{{r.picture.url}}" width="40%" height="40%"/></a>
+     {% else%}
+     <img class="rounded" src="{% static "pedidos/images/default.png" %}" width="150px" height="150px%" />
+     {%endif%}
+     {%endfor%}
+   </div>
+   </div>
+
+ </div>
+     <br>
+     <br>
+     <br>
+
+ <!--//welcome-->
+</div>
+
+ {%endblock content%}

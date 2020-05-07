@@ -1,0 +1,49 @@
+{%extends "pedidos/base2.html"%}
+{%load static%}
+
+{%block content%}
+<!--/welcome-->
+{%include 'pedidos/widgets/messages.html'%}
+         <div class="w3agile welcome">
+       <h3 class="w3ls-title">BIENVENIDO {{request.user.first_name}} !</h3>
+       <div class="b-bottom">
+   <div class="col-md-6 banner_bottom_right">
+   <div class="b-bottom">
+     <form class="form-row" action="index.html" method="post">
+           {%for cat in categorys%}
+           <div class="col-md-4">
+             <div class="card mb-4 shadow-sm">
+               <div class="text-center">
+               {% if cat.picture %}
+              <a href="{%url "menu" cat.name%}" ><img class="rounded" src="{{cat.picture.url}}" width="175px" height="175px"/></a>
+              <span><b>{{cat.name}}</b></span>
+               {% else%}
+               <img class="rounded" src="{% static "pedidos/images/default.png" %}" width="150px" height="150px%" />
+               {%endif%}
+               </div>
+               <!-- <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: Thumbnail"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg> -->
+               <div class="card-body">
+                 <p class="card-text" align="center"><b>{{cat.nombre}}</b></p>
+                 <div class="d-flex justify-content-between align-items-center">
+                   <!-- <p>Precio: <b>Q.{{cat.precio}}</b></p> -->
+                   <!-- <small class="text-muted" align="left">UPC: {{producto.codigo}}</small> -->
+                   <div class="btn-group">
+                     <!-- write somethign -->
+                   </div>
+                 </div>
+               </div>
+             </div>
+           </div>
+           {%endfor%}
+     </form>
+   </div>
+
+ </div>
+     <br>
+     <br>
+     <br>
+
+ <!--//welcome-->
+</div>
+
+ {%endblock content%}
