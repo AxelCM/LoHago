@@ -15,6 +15,8 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 <script type="application/x-javascript"> addEventListener("load", function() {setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
 <meta charset utf="8">
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+
 <!--font-awsome-css-->
 
      <link rel="stylesheet" href="{%static "css/font-awesome.min.css"%}">
@@ -98,7 +100,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                             </a></li>
                             <hr>
                             <br>
-								<li><a class=" link link--yaku" href="{%url "index"%}">
+								<li><a class=" link link--yaku" href="{%url "logout"%}">
                   <span>S</span><span>A</span><span>L</span><span>I</span><span>R</span>
                   <i class="material-icons">exit_to_app</i>
                 </a></li>
@@ -138,5 +140,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 </div>
 <script src="{%static "js/jquery.nicescroll.js"%}"></script>
 <script src="{%static "js/scripts.js"%}"></script>
+{%block plugin%}
+{%endblock plugin%}
 </body>
 </html>

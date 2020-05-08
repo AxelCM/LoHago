@@ -3,5 +3,7 @@
 .idea
 Entorno/
 migrations/
+/media
+/carton
 *.sqlite3
 settings.py

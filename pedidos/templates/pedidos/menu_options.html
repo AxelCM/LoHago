@@ -5,19 +5,26 @@
 <!--/welcome-->
 {%include 'pedidos/widgets/messages.html'%}
          <div class="w3agile welcome">
-       <h3 class="w3ls-title">{{menu.name}}</h3>
+       <h3 class="w3ls-title">{{menu.type}}</h3>
        <div class="b-bottom">
    <div class="col-md-6 banner_bottom_right">
    <div class="b-bottom">
+     <hr>
+     {%for r in types%}
+     <br>
      <div class="text-center">
-       {%for r in types%}
+       <p align-'left'>
+         {{r.name}} -
+         <b>Q.{{r.price}}</b>
+       </p>
      {% if r.picture %}
-    <a href="{%url "menu_options" menu.name r.pk%}" ><img class="rounded" src="{{r.picture.url}}" width="40%" height="40%"/></a>
+     <img class="rounded" src="{{r.picture.url}}" width="40%" height="40%"/>
      {% else%}
      <img class="rounded" src="{% static "pedidos/images/default.png" %}" width="150px" height="150px%" />
      {%endif%}
-     {%endfor%}
+     <a class="btn btn-primary" href="{%url "add_to_cart" menu.type.pk r.pk%}">Agregar +</a>
    </div>
+   {%endfor%}
    </div>
  </div>
      <br>
