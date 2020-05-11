@@ -3,7 +3,10 @@
 
 {%block content%}
 <!--/welcome-->
-{%include 'pedidos/widgets/messages.html'%}
+<a href="{%url "cart"%}" class="btn btn-danger">CARRITO
+<i class="material-icons">add_shopping_cart</i>
+</a>
+
          <div class="w3agile welcome">
        <h3 class="w3ls-title">BIENVENIDO {{request.user.first_name}} !</h3>
        <div class="b-bottom">
@@ -48,7 +51,9 @@
 
  {%endblock content%}
  {%block plugin%}
+ {%if messages%}
  <script>
   {%include "pedidos/components/sweet_alert.js "%}
 </script>
+{%endif%}
  {%endblock plugin%}

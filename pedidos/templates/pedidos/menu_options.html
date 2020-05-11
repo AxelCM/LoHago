@@ -5,7 +5,7 @@
 <!--/welcome-->
 {%include 'pedidos/widgets/messages.html'%}
          <div class="w3agile welcome">
-       <h3 class="w3ls-title">{{menu.type}}</h3>
+       <h3 class="w3ls-title">{{options.name}}</h3>
        <div class="b-bottom">
    <div class="col-md-6 banner_bottom_right">
    <div class="b-bottom">
@@ -22,7 +22,7 @@
      {% else%}
      <img class="rounded" src="{% static "pedidos/images/default.png" %}" width="150px" height="150px%" />
      {%endif%}
-     <a class="btn btn-primary" href="{%url "add_to_cart" menu.type.pk r.pk%}">Agregar +</a>
+     <a class="btn btn-primary" href="{%url "add_to_cart" options.pk r.pk%}">Agregar +</a>
    </div>
    {%endfor%}
    </div>

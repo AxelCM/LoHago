@@ -43,14 +43,21 @@ class SubMenu(models.Model):
         return '{}{}'.format(self.name , self.price)
 
 class Pedido(models.Model):
+    create_at = models.DateTimeField(auto_now_add=True)
     user = models.ForeignKey(User , on_delete=models.CASCADE)
     status = models.BooleanField(default=True)
+    total = models.IntegerField("Total" , default=0)
+    rep = models.IntegerField('Repartidor', default=0)
+    # geo = models.CharField(max_length=100 , blank=True , null=True)
+
+    def __str__(self):
+        return "{}".format(self.pk)
+
+class Items(models.Model):
     create_at = models.DateTimeField(auto_now_add=True)
     update_at = models.DateTimeField(auto_now=True)
-    type = models.ForeignKey(Type , on_delete=models.CASCADE)
-    afectados = models.IntegerField('Personas Afectadas' , blank=True , null=True)
-    rep = models.ForeignKey(Repartidor, on_delete=models.CASCADE)
-    # geo = models.CharField(max_length=100 , blank=True , null=True)
+    pedido = models.ForeignKey(Pedido, on_delete=models.CASCADE)
+    item = models.ForeignKey(SubMenu , on_delete=models.CASCADE)
 
 class Cart(models.Model):
     active = models.BooleanField('Activo',default=True)

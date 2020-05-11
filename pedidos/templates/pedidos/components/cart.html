@@ -1,0 +1,90 @@
+{%extends "pedidos/base2.html"%}
+{%load static%}
+
+{%block content%}
+<!--/welcome-->
+         <div class="w3agile welcome">
+       <h3 class="w3ls-title">AQUI ESTA TU CARRITO {{request.user.first_name}} !</h3>
+
+       <div class="b-bottom">
+   <div class="col-md-6 banner_bottom_right">
+   <div class="b-bottom">
+     <form class="form-row" action="index.html" method="post">
+           <div class="col-md-4">
+             <div class="card mb-4 shadow-sm">
+               <div class="text-center">
+                 <br>
+                 {%if cart%}
+                 <a align="center" class="btn btn-danger" href="{%url "clean_cart"%}" >Vaciar Carrito</a>
+                 <br><br>
+                 <table>
+                   <th colspan="2">MENU</th>
+                   <th colspan="2" align="right">PRECIO</th>
+                   <th></th>
+                   {%for key,value in cart.items%}
+                   {%for key2,value2 in items_cart.items%}
+                   <tr>
+                     <td colspan="2" align="left">
+                       {%if key2 == key%}
+                       {{value2}}
+                       {%endif%}
+                     </td>
+                     <td colspan="2" align="center">
+                       {%if key2 == key%}
+                       Q.{{value}}
+                     </td>
+                     {%for key3,value3 in cart_id.items%}
+
+                          {%if key2 == key3%}
+                            <td><a href="{%url "pop_cart" value3%}">Quitar</a></td>
+                          {%endif%}
+                      {%endfor%}
+                       {%endif%}
+                   </tr>
+                   {%endfor%}
+                   {%endfor%}
+
+                 </table>
+                 <br>
+                 <h4>TOTAL: <b>Q.{{total}}</b></h4>
+                 <br>
+                 <a href="{%url "create_pedido"%}" class="btn btn-warning">CERRAR PEDIDO</a>
+
+                 {%else%}
+                 <h4>Upps, No has agredado nada!</h4>
+                 {%endif%}
+              <br>
+               </div>
+               <!-- <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: Thumbnail"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg> -->
+               <div class="card-body">
+                 <p class="card-text" align="center"><b>{{cat.nombre}}</b></p>
+                 <div class="d-flex justify-content-between align-items-center">
+                   <!-- <p>Precio: <b>Q.{{cat.precio}}</b></p> -->
+                   <!-- <small class="text-muted" align="left">UPC: {{producto.codigo}}</small> -->
+                   <div class="btn-group">
+                     <!-- write somethign -->
+                   </div>
+                 </div>
+               </div>
+             </div>
+           </div>
+     </form>
+   </div>
+
+ </div>
+     <br>
+     <br>
+     <br>
+
+ <!--//welcome-->
+</div>
+</div>
+
+ {%endblock content%}
+ {%block plugin%}
+ {%if messages%}
+ <script>
+  {%include "pedidos/components/sweet_alert.js "%}
+</script>
+{%endif%}
+ {%endblock plugin%}
