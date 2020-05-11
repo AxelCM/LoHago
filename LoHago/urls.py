@@ -26,6 +26,5 @@ urlpatterns = [
     path('logout/', LogoutView.as_view() , name='logout'),
     path('admin/', admin.site.urls),
     path('' , include('pedidos.urls')),
-    path('' , include('carton.tests.urls')),
-    path('accounts/', include('django.contrib.auth.urls')),
+    # path('', include('django.contrib.auth.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) +  static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

@@ -1,11 +1,12 @@
 from django.urls import path
 
 from pedidos.views import (IndexView , DetailCategory , DetailMenu , add_cart,
-CartView, popCart , cleanCart , CreatePedido , MyOrders
+CartView, popCart , cleanCart , CreatePedido , MyOrders , Welcome
 )
 
 urlpatterns = [
     path('' , IndexView.as_view() , name='index'),
+    path('welcome' , Welcome.as_view() , name='welcome'),
     path('my-orders/' , MyOrders.as_view() , name='my_orders'),
     path('remove/<int:item>/' , popCart , name='pop_cart'),
     path('<str:name>/' , DetailCategory.as_view() , name='menu'),

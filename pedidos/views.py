@@ -1,6 +1,8 @@
 from django.shortcuts import render
 from django.core import serializers
 from django.contrib import messages
+from django.contrib.messages.views import SuccessMessageMixin
+
 
 from django.http import HttpResponse , HttpResponseRedirect , JsonResponse
 
@@ -13,12 +15,14 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 # Create your views here.
 
 import json
+from datetime import *
 from pedidos.models import Category, Type, SubMenu, Pedido, Items
 from users.models import User
 
+class Welcome(LoginRequiredMixin,TemplateView):
+    template_name= "pedidos/components/welcome.html"
 
-
-class IndexView(LoginRequiredMixin, TemplateView):
+class IndexView(SuccessMessageMixin, LoginRequiredMixin, TemplateView):
     template_name = "pedidos/init.html"
     login_url = '/login/'
     redirect_field_name = 'redirect_to'
@@ -27,10 +31,11 @@ class IndexView(LoginRequiredMixin, TemplateView):
         # list = self.request.session["cart"]
         # self.request.session["cart"] = []
         # print(list)
+        today = date.today()
         categorys = Category.objects.all()
         session = self.request.session.session_key
         types = Type.objects.all()
-        return {"categorys": categorys , "types":types , "sesion":session , "list":list}
+        return {"categorys": categorys , "types":types , "sesion":session , "list":list , "today":today}
 
 
 class DetailCategory(DetailView):
@@ -133,7 +138,7 @@ def CreatePedido(request):
 
 def cleanCart(request):
     request.session["cart"] = []
-    return HttpResponseRedirect(reverse('cart'))
+    return HttpResponseRedirect(reverse('index'))
 
 
 def safeCartName(request):
