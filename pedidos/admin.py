@@ -46,6 +46,7 @@ class DeliverymanAdmin(admin.ModelAdmin):
 
 admin.site.register(Category, CategoryAdmin)
 admin.site.register(Type, TypeAdmin)
+admin.site.register(SubMenu, SubMenuAdmin)
 admin.site.register(Pedido, PedidoAdmin)
 admin.site.register(Items, ItemsAdmin)
 admin.site.register(Repartidor , DeliverymanAdmin)
