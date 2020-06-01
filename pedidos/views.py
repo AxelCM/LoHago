@@ -6,7 +6,7 @@ from django.contrib.messages.views import SuccessMessageMixin
 
 from django.http import HttpResponse , HttpResponseRedirect , JsonResponse
 
-from django.views.generic import TemplateView , DetailView
+from django.views.generic import TemplateView , DetailView , CreateView
 from django.urls import reverse , reverse_lazy
 
 #for security views
@@ -17,12 +17,21 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 import json
 from datetime import *
 from pedidos.models import Category, Type, SubMenu, Pedido, Items
-from users.models import User
+from users.models import User , Repartidor
+
+#Imports from form_class
+from pedidos.form import PedidoForm
 
 class Welcome(LoginRequiredMixin,TemplateView):
+    """This view is first screen after login
+    is important because here is instanced session["cart"]
+    """
+
     template_name= "pedidos/components/welcome.html"
 
 class IndexView(SuccessMessageMixin, LoginRequiredMixin, TemplateView):
+    """this view is index and all options in sidebar an other options
+    """
     template_name = "pedidos/init.html"
     login_url = '/login/'
     redirect_field_name = 'redirect_to'
@@ -110,10 +119,13 @@ def popCart(request , item):
     return HttpResponseRedirect(reverse('cart'))
 
 def CreatePedido(request):
+    from users.models import Repartidor
     total = 0
     user = User.objects.get(pk=request.user.pk)
+    default =  Repartidor.objects.get(pk=1)
     pedido = Pedido.objects.create(
-    user = user
+    user = user,
+    rep = default
     )
     pedido.save()
     id = 0
@@ -177,6 +189,12 @@ def totalCart(data):
 
 class CartView(TemplateView):
     template_name = 'pedidos/components/cart.html'
+    """
+    # safeCartName - this fuction get item id and name of item for orders
+    # safeCart - this fuction get item name and price for add in orders
+    # safeIdItem -this futcion get id item for show in view
+    # totalCart - calculate total price based in items in order
+    """
 
     def get_context_data(self , *args , **kwargs):
         # cart = self.request.session['cart']
@@ -194,13 +212,67 @@ class MyOrders(LoginRequiredMixin, TemplateView):
     def get_context_data(self , *args , **kwargs):
         user = User.objects.get(pk=self.request.user.pk)
         my_orders = Pedido.objects.filter(user=user)
-        return{"orders": my_orders}
+        last_orders = my_orders[:10]
+        details = Items.objects.filter(pedido__status=True , pedido__user=user)
+        return{"orders": last_orders , "details":details}
 
 def calculateTotal(id):
     id_pedido = id
 
+def DelivermanBusy():
+    busy = Repartidor.objects.filter(active=True , busy=True)
+    return busy
 
+def DeliverymanNotBusy():
+    free = Repartidor.objects.filter(active=True , busy=False)
+    return free
 #
+
+class Deliveryman(TemplateView):
+    template_name = "pedidos/delivery/delivermans.html"
+
+    def get_context_data(self , *args , **kwargs):
+        delivermans = Repartidor.objects.filter(active=True)
+        busy = DelivermanBusy()
+        free = DeliverymanNotBusy()
+        return {"delivermans":delivermans , "busy":busy , "free":DeliverymanNotBusy}
+
+class MyDeliveris(TemplateView):
+    template_name = "pedidos/delivery/delivermans.html"
+
+    def get_context_data(self , *args , **kwargs):
+        user = Repartidor.objects.get(user=self.request.user.pk)
+        my_delivery = Pedido.objects.filter(status=True, rep=user)
+        detail = Items.objects.filter(pedido__status=True)
+        return{"my_delivery":my_delivery , "detail":detail}
+
+class PendindDelivery(TemplateView):
+    template_name = "pedidos/delivery/not_delivery.html"
+
+    def get_context_data(self , *args , **kwargs):
+        orders = Pedido.objects.filter(status=True,rep=1)
+        return{"orders": orders}
+
+class SendOrder(LoginRequiredMixin, SuccessMessageMixin , CreateView):
+    login_url = '/login/'
+    redirect_field_name = 'redirect_to'
+    template_name = "pedidos/send_order.html"
+    form_class = PedidoForm
+    success  = "Tu pedido se realizo de forma correcta!"
+    success_url = reverse_lazy('index')
+
+
+    def form_valid(self, form):
+        self.object = form.save(commit=False)
+        user = User.objects.get(pk=self.request.user.pk)
+        rep = Repartidor.objects.get(user=1)
+        self.object.user = user
+        self.object.rep = rep
+        self.object.save()
+        return super(SendOrder, self).form_valid(form)
+
+
+
 # def add_cart(request , cat , id_item):
 #     menu = cat
 #     id = id_item

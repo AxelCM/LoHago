@@ -13,26 +13,56 @@
              <div class="card mb-4 shadow-sm">
                <div class="text-center">
                  {%if orders%}
-                 <table >
-                   <th colspan="2">No. PEDIDO</th>
-                   <th>**TOTAL**</th>
-                   <th>**ESTADO****</th>
-                   {%for m in orders%}
+                 {%for m in orders%}
+                 <table align="center" class="table table-bordered">
                    <tr>
-                     <td colspan="2">{{m.pk}}</td>
-                     <td><b>Q.{{m.total}}</b></td>
+                     <th>No. Pedido</th>
+                     <td>{{m.pk}}</td>
+                   </tr>
+                   <tr>
+                     <th>TOTAL</th>
+                     <td>
+                       Q.{{m.total}}
+                      <a data-toggle="collapse" href="#detail_order_{{m.pk}}" role="button" aria-expanded="false" aria-controls="collapseExample"> +Ver Mas..</a>
+
+                     </td>
+                   </tr>
+                   <tr>
+                     <th>ESTADO</th>
                      {%if m.status == True%}
-                     <td><p style="color:red">RECIBIDO</p></td>
+                     <td> <font color="red"> <b>RECIBIDO</b> </font></td>
                      {%else%}
-                     <td><p style="color:green">ENTREGADO</p></td>
+                     <td><font color="green"> <b>ENTREGADO</b> </font></td>
                      {%endif%}
                    </tr>
-                   {%endfor%}
-
+                   <tr>
+                     <th>REPARTIDOR</th>
+                     <td>{{m.rep}}</td>
+                   </tr>
                  </table>
+                 <div class="collapse" id="detail_order_{{m.pk}}">
+                   <div class="card card-body">
+                     <p><b>DETALLE DEL PEDIDO</b></p>
+                     <ol type="a">
+                     {%for d in details%}
+                     {%if d.pedido.pk == m.pk %}
+                       <li align="left">{{d.item.name}} - Q.{{d.item.price}} </li>
+                     {%endif%}
+                     {%endfor%}
+                     {%if m.notes%}
+                     <p><b>NOTAS:</b> {{m.notes}}</p>
+                     {%endif%}
+                   </ol>
+                     <p><b>TOTAL: </b> Q.{{m.total}}</p>
+                   </div>
+                 </div>
+                 <br>
+                 {%endfor%}
                  {%else%}
                  <h4>Uppps, no hay pedidos realizados!</h4>
                  {%endif%}
+
+
                </div>
              </div>
            </div>
@@ -45,6 +75,7 @@
      <br>
 
  <!--//welcome-->
+</div>
 </div>
 
  {%endblock content%}

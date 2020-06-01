@@ -1,0 +1,67 @@
+{%extends "pedidos/admin_base.html"%}
+{%load static%}
+
+{%block content%}
+<!--/welcome-->
+         <div class="w3agile welcome">
+       <h3 class="w3ls-title">TU ESTADO ACTUAL</h3>
+       {%if my_delivery%}
+       <h3 class="w3ls-title" style="color:green" align="center">ESTAS EN UNA ENTREGA</h3>
+       {%endif%}
+       <div class="b-bottom">
+   <div class="col-md-6 banner_bottom_right">
+   <div class="b-bottom">
+     <form class="form-row" action="index.html" method="post">
+           <div class="col-md-4">
+             <div class="card mb-4 shadow-sm">
+               <div class="text-center">
+                 {%for r in my_delivery%}
+                 <table class="table table-agileinfo">
+                   <tr>
+                     <th>Cliente</th>
+                     <td>{{r.user.first_name}} {{r.user.last_name}}</td>
+                   </tr>
+                   <tr>
+                     <th>NOTA</th>
+                     <td>{{r.notes}}</td>
+                   </tr>
+                 </table>
+                 <br>
+                 <h3 align="center">DETALLE</h3>
+                 <p>SI NO VES PRODUCTOS EN EL DETALLE, PUEDE
+                   QUE SEAN SOLO MANDADOS U OTROS SERVICIOS
+                 </p>
+
+                 <ol>
+                 {%for d in detail%}
+                 {%if d.pedido.pk == m.pk %}
+                   <li align="left">{{d.item.name}} - Q.{{d.item.price}} </li>
+                 {%endif%}
+                 {%endfor%}
+                 {%if m.notes%}
+                 <p><b>NOTAS:</b> {{m.notes}}</p>
+                 {%endif%}
+               </ol>
+                {%endfor%}
+               </div>
+             </div>
+           </div>
+     </form>
+   </div>
+
+ </div>
+     <br>
+     <br>
+     <br>
+
+ <!--//welcome-->
+</div>
+
+ {%endblock content%}
+ {%block plugin%}
+ {%if messages%}
+ <script>
+  {%include "pedidos/components/sweet_alert.js "%}
+</script>
+{%endif%}
+ {%endblock plugin%}

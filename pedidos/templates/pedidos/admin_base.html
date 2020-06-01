@@ -66,39 +66,12 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 			<div class="wrap-content">
 				<div class="profile-menu text-center">
 					<img class="border-effect" src="{%static "images/logo_short.png"%}" alt=" ">
-
 						<div class="pro-menu">
 							<div class="logo">
-
-								<li><a class=" link link--yaku" href="{%url "index"%}">
-                  <span>M</span><span>E</span><span>N</span><span>U</span><span>S</span>
+								<li><a class=" link link--yaku" href="{%url "view_orders"%}">
+                  <span>R</span><span>E</span><span>P</span><span>A</span><span>R</span><span>T</span><span>I</span><span>R</span>
                   <i class="material-icons">amp_stories</i>
                     </a></li>
-
-								<li><a class=" link link--yaku" href="{%url "my_orders"%}">
-                  <span>M</span><span>I</span><span>S</span><span>&nbsp;</span><span>P</span><span>E</span><span>D</span><span>I</span><span>D</span><span>O</span><span>S</span>
-                  <i class="material-icons">format_list_bulleted</i>
-                    </a></li>
-
-                    <hr>
-                    <li><a class=" link link--yaku" href="{%url "index"%}">
-                      <span>P</span><span>E</span><span>R</span><span>F</span><span>I</span><span>L</span>
-                      <i class="material-icons">account_circle</i>
-                    </a></li>
-                    <li><a class=" link link--yaku" href="{%url "index"%}">
-                      <span>C</span><span>O</span><span>N</span><span>T</span><span>A</span><span>C</span><span>T</span><span>O</span>
-                      <i class="material-icons">call</i>
-                        </a></li>
-                        <li><a class=" link link--yaku" href="{%url "index"%}">
-                          <span>A</span><span>V</span><span>I</span><span>S</span><span>O</span><span>S</span><span>&nbsp;</span><span>L</span><span>E</span><span>G</span><span>A</span><span>L</span><span>E</span><span>S</span>
-                          <i class="material-icons">warning</i>
-                            </a></li>
-                          {%if perms.pedidos.view_rep%}
-                        <li><a class=" link link--yaku" href="{%url "view_deliverman"%}">
-                          <span>R</span><span>E</span><span>P</span><span>A</span><span>R</span><span>T</span><span>I</span><span>D</span><span>O</span><span>R</span>
-                          <i class="material-icons">inbox</i>
-                            </a></li>
-                            {%endif%}
                             <hr>
                             <br>
 								<li><a class=" link link--yaku" href="{%url "logout"%}">
@@ -125,8 +98,8 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 <!-- banner -->
 
    <!-- //banner -->
+   <h3 class="w3ls-title">Sitio para repartidores</h3>
 {%block content%}
-
 
   {%endblock content%}
 		<!--/footer-->

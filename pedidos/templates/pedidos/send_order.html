@@ -1,0 +1,30 @@
+{%extends "pedidos/base2.html"%}
+{%load static%}
+
+{%block content%}
+<!--/welcome-->
+{%include 'pedidos/widgets/messages.html'%}
+{%include 'pedidos/widgets/form_errors.html'%}
+         <div class="w3agile welcome">
+       <h3 class="w3ls-title">Escribenos lo que necesitas!</h3>
+       <div class="b-bottom">
+   <div class="col-md-6 banner_bottom_right">
+   <div class="b-bottom">
+
+   <form class="contact-form" action="{%url "create_order"%}" method="post">
+     {%csrf_token%}
+     <textarea name="notes" placeholder="Que necesitas que hagamos por ti?"></textarea>
+     <input type="hidden" name="user" value="{{request.user.pk}}">
+     <input type="hidden" name="rep" value="1">
+     <input type="submit" value="Enviar">
+   </form>
+   </div>
+ </div>
+     <br>
+     <br>
+     <br>
+
+ <!--//welcome-->
+</div>
+
+ {%endblock content%}

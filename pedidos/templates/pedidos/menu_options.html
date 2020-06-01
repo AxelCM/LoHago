@@ -24,6 +24,9 @@
      {%endif%}
      <a class="btn btn-primary" href="{%url "add_to_cart" options.pk r.pk%}">Agregar +</a>
    </div>
+   {%empty%}
+   <p><b>LO QUE NECESITES DE {{options.name}}</b></p>
+   <a href="{%url "create_order"%}" class="btn btn-primary">+ PEDIR</a>
    {%endfor%}
    </div>
  </div>
